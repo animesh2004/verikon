@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const PROJECT_TYPES = [
   "Web development",
@@ -122,21 +122,69 @@ export default function IntakeForm() {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="rounded-3xl border hairline bg-surface p-10 md:p-14 text-center"
       >
-        <div className="inline-flex items-center justify-center size-14 rounded-full bg-fg text-bg mb-6">
-          <Check className="size-6" aria-hidden="true" />
+        <div className="relative inline-flex items-center justify-center mb-8">
+          {!reduce && (
+            <motion.span
+              aria-hidden="true"
+              className="absolute inset-0 rounded-full border border-fg/30"
+              initial={{ scale: 1, opacity: 0.55 }}
+              animate={{ scale: 2.1, opacity: 0 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.45 }}
+            />
+          )}
+          <motion.div
+            initial={reduce ? false : { scale: 0 }}
+            animate={reduce ? {} : { scale: 1 }}
+            transition={{ type: "spring", stiffness: 240, damping: 18, delay: 0.05 }}
+            className="relative size-16 rounded-full bg-fg flex items-center justify-center shadow-[0_8px_24px_-8px_rgba(0,0,0,0.4)]"
+          >
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              aria-hidden="true"
+            >
+              <motion.path
+                d="M8 16.5 L13.5 22 L24 11"
+                stroke="var(--bg)"
+                strokeWidth="2.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={reduce ? { pathLength: 1 } : { pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1], delay: 0.38 }}
+              />
+            </svg>
+          </motion.div>
         </div>
-        <h2 className="font-display text-h2 font-bold tracking-tightest">Thanks — we got it.</h2>
-        <p className="mt-4 text-lg text-muted max-w-xl mx-auto leading-relaxed">
+        <motion.h2
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.7 }}
+          className="font-display text-h2 font-bold tracking-tightest"
+        >
+          Thanks — we got it.
+        </motion.h2>
+        <motion.p
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.85 }}
+          className="mt-4 text-lg text-muted max-w-xl mx-auto leading-relaxed"
+        >
           Utkarsh and the team will review your brief and reply within 24 hours with an honest take
           and a path forward.
-        </p>
-        <a
+        </motion.p>
+        <motion.a
           href="/"
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 1 }}
           className="mt-8 inline-flex items-center gap-2 h-12 px-6 rounded-full bg-fg text-bg text-sm font-medium hover:opacity-90 transition-opacity duration-250"
         >
           Back to home
           <ArrowUpRight className="size-4" aria-hidden="true" />
-        </a>
+        </motion.a>
       </motion.div>
     );
   }
