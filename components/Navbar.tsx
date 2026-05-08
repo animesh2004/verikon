@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import clsx from "clsx";
 
 const links = [
@@ -51,12 +52,12 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        <a
-          href="#contact"
+        <Link
+          href="/intake"
           className="hidden md:inline-flex items-center h-9 px-4 rounded-full bg-fg text-bg text-sm font-medium hover:opacity-85 transition-opacity duration-250 cursor-pointer"
         >
           Start a project
-        </a>
+        </Link>
       </nav>
     </header>
   );
