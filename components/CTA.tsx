@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 
@@ -29,21 +30,21 @@ export default function CTA() {
               path forward.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
-              <a
-                href="mailto:hello@verikon.ai"
+              <Link
+                href="/intake"
                 className="group inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full bg-ink-50 text-ink-950 text-sm font-medium hover:bg-white transition-colors duration-250 cursor-pointer"
               >
-                hello@verikon.ai
+                Start a project
                 <ArrowUpRight
                   className="size-4 transition-transform duration-250 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   aria-hidden="true"
                 />
-              </a>
+              </Link>
               <a
-                href="#"
+                href="mailto:hello@verikon.ai"
                 className="inline-flex items-center justify-center h-12 px-6 rounded-full border border-white/20 text-sm font-medium hover:bg-white/5 transition-colors duration-250 cursor-pointer"
               >
-                Book a 20-min intro
+                hello@verikon.ai
               </a>
             </div>
           </div>
