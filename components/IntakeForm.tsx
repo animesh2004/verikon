@@ -172,8 +172,8 @@ export default function IntakeForm() {
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.85 }}
           className="mt-4 text-lg text-muted max-w-xl mx-auto leading-relaxed"
         >
-          Utkarsh and the team will review your brief and reply within 24 hours with an honest take
-          and a path forward.
+          We'll review your brief and get back to you within 24 hours with an honest take and a
+          path forward.
         </motion.p>
         <motion.a
           href="/"
