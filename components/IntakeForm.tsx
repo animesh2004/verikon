@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { ArrowUpRight, Calendar, FileText } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Calendar, FileText } from "lucide-react";
 
 const CALENDLY_URL = "https://calendly.com/astrobonanimesh-071/30min";
 
@@ -27,6 +27,16 @@ const BUDGETS = [
   "Not sure yet",
 ];
 
+type Step1Data = {
+  name: string;
+  email: string;
+  phone: string;
+  service: string;
+  hp: string;
+};
+
+const EMPTY_STEP1: Step1Data = { name: "", email: "", phone: "", service: "", hp: "" };
+
 type View =
   | { kind: "step1" }
   | { kind: "chooser"; id: string; firstName: string }
@@ -43,6 +53,8 @@ const helpCls = "mt-2 text-xs text-muted";
 
 export default function IntakeForm() {
   const [view, setView] = useState<View>({ kind: "step1" });
+  const [step1Data, setStep1Data] = useState<Step1Data>(EMPTY_STEP1);
+  const [leadId, setLeadId] = useState<string | null>(null);
 
   return (
     <AnimatePresence mode="wait">
@@ -53,23 +65,36 @@ export default function IntakeForm() {
         exit={{ opacity: 0, y: -8 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       >
-        {view.kind === "step1" && <Step1 onDone={(id, firstName) => setView({ kind: "chooser", id, firstName })} />}
+        {view.kind === "step1" && (
+          <Step1
+            values={step1Data}
+            setValues={setStep1Data}
+            existingId={leadId}
+            onDone={(id, firstName) => {
+              setLeadId(id);
+              setView({ kind: "chooser", id, firstName });
+            }}
+          />
+        )}
         {view.kind === "chooser" && (
           <Chooser
             onCall={() => setView({ kind: "call", id: view.id, firstName: view.firstName })}
             onBrief={() => setView({ kind: "brief", id: view.id, firstName: view.firstName })}
+            onBack={() => setView({ kind: "step1" })}
           />
         )}
         {view.kind === "call" && (
           <CallView
             id={view.id}
             onConfirmed={() => setView({ kind: "done", mode: "call", firstName: view.firstName })}
+            onBack={() => setView({ kind: "chooser", id: view.id, firstName: view.firstName })}
           />
         )}
         {view.kind === "brief" && (
           <BriefForm
             id={view.id}
             onDone={() => setView({ kind: "done", mode: "brief", firstName: view.firstName })}
+            onBack={() => setView({ kind: "chooser", id: view.id, firstName: view.firstName })}
           />
         )}
         {view.kind === "done" && <DoneView mode={view.mode} firstName={view.firstName} />}
@@ -80,14 +105,22 @@ export default function IntakeForm() {
 
 /* ──────────────── STEP 1 ──────────────── */
 
-function Step1({ onDone }: { onDone: (id: string, firstName: string) => void }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [service, setService] = useState("");
-  const [hp, setHp] = useState("");
+function Step1({
+  values,
+  setValues,
+  existingId,
+  onDone,
+}: {
+  values: Step1Data;
+  setValues: React.Dispatch<React.SetStateAction<Step1Data>>;
+  existingId: string | null;
+  onDone: (id: string, firstName: string) => void;
+}) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const update = <K extends keyof Step1Data>(k: K, v: Step1Data[K]) =>
+    setValues((prev) => ({ ...prev, [k]: v }));
+  const { name, email, phone, service, hp } = values;
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -97,7 +130,7 @@ function Step1({ onDone }: { onDone: (id: string, firstName: string) => void }) 
       const res = await fetch("/api/intake/step1", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, service, hp }),
+        body: JSON.stringify({ id: existingId ?? undefined, name, email, phone, service, hp }),
       });
       const json = await res.json();
       if (!res.ok || !json.ok) throw new Error(json.error || "Something went wrong");
@@ -119,7 +152,7 @@ function Step1({ onDone }: { onDone: (id: string, firstName: string) => void }) 
         tabIndex={-1}
         autoComplete="off"
         value={hp}
-        onChange={(e) => setHp(e.target.value)}
+        onChange={(e) => update("hp", e.target.value)}
         className="absolute left-[-9999px] top-[-9999px] opacity-0 pointer-events-none"
         aria-hidden="true"
       />
@@ -131,7 +164,7 @@ function Step1({ onDone }: { onDone: (id: string, firstName: string) => void }) 
             type="text"
             required
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => update("name", e.target.value)}
             autoComplete="name"
           />
         </Field>
@@ -141,7 +174,7 @@ function Step1({ onDone }: { onDone: (id: string, firstName: string) => void }) 
             type="email"
             required
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => update("email", e.target.value)}
             autoComplete="email"
             placeholder="you@company.com"
           />
@@ -152,7 +185,7 @@ function Step1({ onDone }: { onDone: (id: string, firstName: string) => void }) 
             type="tel"
             required
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => update("phone", e.target.value)}
             autoComplete="tel"
             placeholder="+1 555 0123"
           />
@@ -162,7 +195,7 @@ function Step1({ onDone }: { onDone: (id: string, firstName: string) => void }) 
             className={inputCls + " appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22%2378716C%22><path d=%22M5.5 7.5l4.5 4.5 4.5-4.5%22 stroke=%22%2378716C%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')] bg-no-repeat bg-[right_1rem_center] bg-[length:18px] pr-10"}
             required
             value={service}
-            onChange={(e) => setService(e.target.value)}
+            onChange={(e) => update("service", e.target.value)}
           >
             <option value="" disabled>
               Select a service
@@ -203,9 +236,18 @@ function Step1({ onDone }: { onDone: (id: string, firstName: string) => void }) 
 
 /* ──────────────── CHOOSER ──────────────── */
 
-function Chooser({ onCall, onBrief }: { onCall: () => void; onBrief: () => void }) {
+function Chooser({
+  onCall,
+  onBrief,
+  onBack,
+}: {
+  onCall: () => void;
+  onBrief: () => void;
+  onBack: () => void;
+}) {
   return (
     <div className="space-y-8">
+      <BackLink onClick={onBack} label="Edit your details" />
       <ProgressLabel current={2} total={2} title="Choose your preferred next step." subtitle="We can either discuss your project live or review a detailed brief." />
       <div className="grid md:grid-cols-2 gap-5">
         <ChooserCard
@@ -275,7 +317,15 @@ function ChooserCard({
 
 /* ──────────────── CALL ──────────────── */
 
-function CallView({ id, onConfirmed }: { id: string; onConfirmed: () => void }) {
+function CallView({
+  id,
+  onConfirmed,
+  onBack,
+}: {
+  id: string;
+  onConfirmed: () => void;
+  onBack: () => void;
+}) {
   const markedRef = useRef(false);
 
   useEffect(() => {
@@ -302,6 +352,7 @@ function CallView({ id, onConfirmed }: { id: string; onConfirmed: () => void }) 
 
   return (
     <div className="space-y-6">
+      <BackLink onClick={onBack} label="Back to options" />
       <ProgressLabel current={2} total={2} title="Pick a time that works for you." subtitle="30 minutes. Real strategy. No fluff." />
       <div
         className="calendly-inline-widget rounded-2xl border hairline overflow-hidden"
@@ -315,7 +366,15 @@ function CallView({ id, onConfirmed }: { id: string; onConfirmed: () => void }) 
 
 /* ──────────────── BRIEF ──────────────── */
 
-function BriefForm({ id, onDone }: { id: string; onDone: () => void }) {
+function BriefForm({
+  id,
+  onDone,
+  onBack,
+}: {
+  id: string;
+  onDone: () => void;
+  onBack: () => void;
+}) {
   const [problem, setProblem] = useState("");
   const [outcome, setOutcome] = useState("");
   const [budget, setBudget] = useState("");
@@ -358,6 +417,7 @@ function BriefForm({ id, onDone }: { id: string; onDone: () => void }) {
 
   return (
     <form onSubmit={onSubmit} noValidate className="space-y-8">
+      <BackLink onClick={onBack} label="Back to options" />
       <ProgressLabel current={2} total={2} title="Project brief." subtitle="A bit more detail so we come prepared to the first call." />
 
       <input
@@ -580,6 +640,19 @@ function Field({
       </span>
       {children}
     </label>
+  );
+}
+
+function BackLink({ onClick, label }: { onClick: () => void; label: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="inline-flex items-center gap-1.5 -ml-1 px-2 py-1 rounded-md text-sm text-muted hover:text-fg transition-colors duration-250"
+    >
+      <ArrowLeft className="size-4" aria-hidden="true" />
+      {label}
+    </button>
   );
 }
 

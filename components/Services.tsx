@@ -50,7 +50,7 @@ export default function Services() {
       id="services"
       eyebrow="Services"
       title="The full stack — engineered intelligently."
-      description="Six capabilities, one senior pod. Pick what you need; we'll bring the rest."
+      description="Six capabilities, one pod. Pick what you need; we'll bring the rest."
     >
       <ul
         role="list"

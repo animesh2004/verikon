@@ -12,7 +12,7 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Verikon — AI-first digital solutions agency",
   description:
-    "Verikon engineers AI-powered web platforms, automation systems, and custom software for ambitious teams. Strategy, design, and engineering in one senior pod.",
+    "Verikon engineers AI-powered web platforms, automation systems, and custom software for ambitious teams. Strategy, design, and engineering in one pod.",
   metadataBase: new URL("https://verikon.ai"),
   openGraph: {
     title: "Verikon — AI-first digital solutions agency",

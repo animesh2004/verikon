@@ -15,7 +15,7 @@ const quotes = [
     r: "CEO, Kite Health",
   },
   {
-    q: "Rare combination of senior taste, real engineering, and calm communication. Every meeting moved the work forward.",
+    q: "Rare combination of taste, real engineering, and calm communication. Every meeting moved the work forward.",
     a: "Priya Raman",
     r: "Head of Design, Ledger AI",
   },

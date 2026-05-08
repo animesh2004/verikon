@@ -16,7 +16,7 @@ export default function Process() {
     <Section
       id="process"
       eyebrow="Process"
-      title="A simple, senior workflow."
+      title="A simple, focused workflow."
       description="Four steps. No surprises. You always know what's happening and what's next."
     >
       <ol role="list" className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">

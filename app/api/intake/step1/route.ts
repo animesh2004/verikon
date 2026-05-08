@@ -5,6 +5,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 type Payload = {
+  id?: string;
   name?: string;
   email?: string;
   phone?: string;
@@ -14,6 +15,7 @@ type Payload = {
 
 const REQUIRED = ["name", "email", "phone", "service"] as const;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const MAX_LEN = 500;
 
 function clean(v: unknown): string {
@@ -57,15 +59,32 @@ export async function POST(req: Request) {
     );
   }
 
+  const existingId = clean(body.id);
+  const fields = {
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    project_type: data.service,
+  };
+
+  if (existingId && UUID_RE.test(existingId)) {
+    const { error } = await supabase
+      .from("intake_submissions")
+      .update(fields)
+      .eq("id", existingId);
+    if (error) {
+      console.error("[intake/step1] update failed", error);
+      return NextResponse.json(
+        { ok: false, error: "Could not save. Please try again." },
+        { status: 500 }
+      );
+    }
+    return NextResponse.json({ ok: true, id: existingId });
+  }
+
   const { data: row, error } = await supabase
     .from("intake_submissions")
-    .insert({
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      project_type: data.service,
-      step_completed: 1,
-    })
+    .insert({ ...fields, step_completed: 1 })
     .select("id")
     .single();
 
