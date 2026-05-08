@@ -36,6 +36,9 @@ paste.env
 # vercel
 .vercel
 
+# editor / agent state
+.claude/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
