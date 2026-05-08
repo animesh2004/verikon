@@ -6,12 +6,12 @@ create table if not exists public.intake_submissions (
   received_at     timestamptz not null    default now(),
   name            text        not null,
   email           text        not null,
-  company         text        not null,
+  company         text,
   role            text,
   website         text,
-  project_type    text        not null,
+  project_type    text,
   services        text[]      not null    default '{}',
-  problem         text        not null,
+  problem         text,
   outcome         text,
   automation      text,
   tools           text,
@@ -19,6 +19,14 @@ create table if not exists public.intake_submissions (
   budget          text,
   notes           text
 );
+
+-- Multi-step flow additions (idempotent for migration of an existing table).
+alter table public.intake_submissions add column if not exists phone text;
+alter table public.intake_submissions add column if not exists next_step_choice text;
+alter table public.intake_submissions add column if not exists step_completed smallint not null default 1;
+alter table public.intake_submissions alter column company drop not null;
+alter table public.intake_submissions alter column project_type drop not null;
+alter table public.intake_submissions alter column problem drop not null;
 
 create index if not exists intake_submissions_received_at_idx
   on public.intake_submissions (received_at desc);
