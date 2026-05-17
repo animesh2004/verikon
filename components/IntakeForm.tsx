@@ -9,11 +9,12 @@ import { ArrowLeft, ArrowUpRight, Calendar, FileText } from "lucide-react";
 const CALENDLY_URL = "https://calendly.com/astrobonanimesh-071/30min";
 
 const SERVICES = [
-  "Web development",
-  "UI/UX design",
-  "AI automation",
-  "Workflow / n8n system",
-  "Custom software / MVP",
+  "AI Agents & Autonomous Systems",
+  "AI Chatbots",
+  "Edge AI & Embedded Models",
+  "Web & App Development",
+  "Full-Stack AI Products",
+  "AI Strategy & Technical Leadership",
   "Not sure yet",
 ];
 
@@ -45,11 +46,11 @@ type View =
   | { kind: "done"; mode: "call" | "brief"; firstName: string };
 
 const inputCls =
-  "w-full h-12 px-4 rounded-xl border hairline bg-surface text-fg placeholder:text-muted/70 focus-visible:border-fg transition-colors duration-250";
+  "w-full h-12 px-4 rounded-xl border border-[#FF6B35] bg-[#0a0b0d] text-white placeholder:text-[#666666] focus-visible:border-[#FF6B35] transition-colors duration-250";
 const textareaCls =
-  "w-full px-4 py-3 rounded-xl border hairline bg-surface text-fg placeholder:text-muted/70 focus-visible:border-fg transition-colors duration-250 resize-y min-h-[120px]";
-const labelCls = "block text-sm font-medium text-fg mb-2";
-const helpCls = "mt-2 text-xs text-muted";
+  "w-full px-4 py-3 rounded-xl border border-[#FF6B35] bg-[#0a0b0d] text-white placeholder:text-[#666666] focus-visible:border-[#FF6B35] transition-colors duration-250 resize-y min-h-[120px]";
+const labelCls = "block text-sm font-medium text-white mb-2";
+const helpCls = "mt-2 text-xs text-[#999999]";
 
 export default function IntakeForm() {
   const [view, setView] = useState<View>({ kind: "step1" });
@@ -142,9 +143,18 @@ function Step1({
     }
   }
 
+  const filledCount = [name, email, phone, service].filter((v) => v && v.trim()).length;
+  const step1Progress = filledCount / 4;
+
   return (
     <form onSubmit={onSubmit} noValidate className="space-y-8">
-      <ProgressLabel current={1} total={2} title="Let's get started." subtitle="Share a few details and we'll take it from there." />
+      <ProgressLabel
+        current={1}
+        total={2}
+        progress={step1Progress}
+        title="Let's get started."
+        subtitle="Share a few details and we'll take it from there."
+      />
 
       <input
         type="text"
@@ -192,7 +202,7 @@ function Step1({
         </Field>
         <Field label="What do you need help with?" required>
           <select
-            className={inputCls + " appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22%2378716C%22><path d=%22M5.5 7.5l4.5 4.5 4.5-4.5%22 stroke=%22%2378716C%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')] bg-no-repeat bg-[right_1rem_center] bg-[length:18px] pr-10"}
+            className={inputCls + " appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22%23999999%22><path d=%22M5.5 7.5l4.5 4.5 4.5-4.5%22 stroke=%22%23999999%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')] bg-no-repeat bg-[right_1rem_center] bg-[length:18px] pr-10"}
             required
             value={service}
             onChange={(e) => update("service", e.target.value)}
@@ -218,7 +228,7 @@ function Step1({
         <button
           type="submit"
           disabled={busy}
-          className="group w-full inline-flex items-center justify-center gap-2 h-12 rounded-full bg-fg text-bg text-sm font-medium hover:opacity-90 transition-opacity duration-250 disabled:opacity-60 disabled:cursor-not-allowed"
+          className="group w-full inline-flex items-center justify-center gap-2 h-12 rounded-full bg-[#FF6B35] text-white text-sm font-medium hover:opacity-90 transition-opacity duration-250 disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {busy ? "Saving…" : "Continue"}
           {!busy && (
@@ -266,7 +276,7 @@ function Chooser({
           onClick={onBrief}
         />
       </div>
-      <p className="text-xs text-muted text-center">
+      <p className="text-xs text-[#999999] text-center">
         Your information is safe with us.
       </p>
     </div>
@@ -293,21 +303,21 @@ function ChooserCard({
       type="button"
       onClick={onClick}
       className={
-        "group relative text-left rounded-2xl border bg-surface p-6 transition-colors duration-250 lift " +
-        (recommended ? "border-fg" : "hairline hover:border-fg/40")
+        "group relative text-left rounded-2xl border bg-gradient-to-br from-[#0f1012] to-[#0a0b0d] p-6 transition-colors duration-250 lift " +
+        (recommended ? "border-[#FF6B35]" : "border-[#1a1a1a] hover:border-[#FF6B35]/40")
       }
     >
       {recommended && (
-        <span className="absolute top-4 right-4 inline-flex items-center h-6 px-2.5 rounded-full bg-fg text-bg text-[10px] font-medium tracking-wide uppercase">
+        <span className="absolute top-4 right-4 inline-flex items-center h-6 px-2.5 rounded-full bg-[#FF6B35] text-white text-[10px] font-medium tracking-wide uppercase">
           Recommended
         </span>
       )}
-      <span className="inline-flex items-center justify-center size-10 rounded-xl bg-surface-2 text-fg">
+      <span className="inline-flex items-center justify-center size-10 rounded-xl bg-[#1a1a1a] text-[#FF6B35]">
         {icon}
       </span>
-      <h3 className="mt-4 font-display font-bold text-lg tracking-tightest">{title}</h3>
-      <p className="mt-2 text-sm text-muted leading-relaxed">{body}</p>
-      <div className="mt-6 inline-flex items-center gap-2 h-10 px-4 rounded-full bg-fg text-bg text-sm font-medium group-hover:opacity-90 transition-opacity duration-250">
+      <h3 className="mt-4 font-display font-bold text-lg tracking-tightest text-white">{title}</h3>
+      <p className="mt-2 text-sm text-[#999999] leading-relaxed">{body}</p>
+      <div className="mt-6 inline-flex items-center gap-2 h-10 px-4 rounded-full bg-[#FF6B35] text-white text-sm font-medium group-hover:opacity-90 transition-opacity duration-250">
         {cta}
         <ArrowUpRight className="size-4" aria-hidden="true" />
       </div>
@@ -355,7 +365,7 @@ function CallView({
       <BackLink onClick={onBack} label="Back to options" />
       <ProgressLabel current={2} total={2} title="Pick a time that works for you." subtitle="30 minutes. Real strategy. No fluff." />
       <div
-        className="calendly-inline-widget rounded-2xl border hairline overflow-hidden"
+        className="calendly-inline-widget rounded-2xl border border-[#1a1a1a] overflow-hidden"
         data-url={CALENDLY_URL}
         style={{ minWidth: "320px", height: "700px" }}
       />
@@ -415,10 +425,19 @@ function BriefForm({
     }
   }
 
+  const briefFilled = [problem, outcome, budget, timeline, website, notes].filter((v) => v && v.trim()).length;
+  const briefProgress = briefFilled / 6;
+
   return (
     <form onSubmit={onSubmit} noValidate className="space-y-8">
       <BackLink onClick={onBack} label="Back to options" />
-      <ProgressLabel current={2} total={2} title="Project brief." subtitle="A bit more detail so we come prepared to the first call." />
+      <ProgressLabel
+        current={2}
+        total={2}
+        progress={briefProgress}
+        title="Project brief."
+        subtitle="A bit more detail so we come prepared to the first call."
+      />
 
       <input
         type="text"
@@ -498,7 +517,7 @@ function BriefForm({
         <button
           type="submit"
           disabled={busy}
-          className="group w-full inline-flex items-center justify-center gap-2 h-12 rounded-full bg-fg text-bg text-sm font-medium hover:opacity-90 transition-opacity duration-250 disabled:opacity-60 disabled:cursor-not-allowed"
+          className="group w-full inline-flex items-center justify-center gap-2 h-12 rounded-full bg-[#FF6B35] text-white text-sm font-medium hover:opacity-90 transition-opacity duration-250 disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {busy ? "Sending…" : "Submit project brief"}
           {!busy && (
@@ -530,7 +549,7 @@ function DoneView({ mode, firstName }: { mode: "call" | "brief"; firstName: stri
         {!reduce && (
           <motion.span
             aria-hidden="true"
-            className="absolute inset-0 rounded-full border border-fg/30"
+            className="absolute inset-0 rounded-full border border-[#FF6B35]/40"
             initial={{ scale: 1, opacity: 0.55 }}
             animate={{ scale: 2.1, opacity: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.45 }}
@@ -540,12 +559,12 @@ function DoneView({ mode, firstName }: { mode: "call" | "brief"; firstName: stri
           initial={reduce ? false : { scale: 0 }}
           animate={reduce ? {} : { scale: 1 }}
           transition={{ type: "spring", stiffness: 240, damping: 18, delay: 0.05 }}
-          className="relative size-16 rounded-full bg-fg flex items-center justify-center shadow-[0_8px_24px_-8px_rgba(0,0,0,0.4)]"
+          className="relative size-16 rounded-full bg-[#FF6B35] flex items-center justify-center shadow-[0_8px_24px_-8px_rgba(0,0,0,0.4)]"
         >
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
             <motion.path
               d="M8 16.5 L13.5 22 L24 11"
-              stroke="var(--bg)"
+              stroke="#FFFFFF"
               strokeWidth="2.75"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -560,7 +579,7 @@ function DoneView({ mode, firstName }: { mode: "call" | "brief"; firstName: stri
         initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.7 }}
-        className="font-display text-h2 font-bold tracking-tightest"
+        className="font-display text-h2 font-bold tracking-tightest text-white"
       >
         {headline}
       </motion.h2>
@@ -568,7 +587,7 @@ function DoneView({ mode, firstName }: { mode: "call" | "brief"; firstName: stri
         initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.85 }}
-        className="mt-4 text-lg text-muted max-w-xl mx-auto leading-relaxed"
+        className="mt-4 text-lg text-[#999999] max-w-xl mx-auto leading-relaxed"
       >
         {body}
       </motion.p>
@@ -579,7 +598,7 @@ function DoneView({ mode, firstName }: { mode: "call" | "brief"; firstName: stri
       >
         <Link
           href="/"
-          className="mt-8 inline-flex items-center gap-2 h-12 px-6 rounded-full bg-fg text-bg text-sm font-medium hover:opacity-90 transition-opacity duration-250"
+          className="mt-8 inline-flex items-center gap-2 h-12 px-6 rounded-full bg-[#FF6B35] text-white text-sm font-medium hover:opacity-90 transition-opacity duration-250"
         >
           Back to home
           <ArrowUpRight className="size-4" aria-hidden="true" />
@@ -596,29 +615,35 @@ function ProgressLabel({
   total,
   title,
   subtitle,
+  progress,
 }: {
   current: number;
   total: number;
   title: string;
   subtitle: string;
+  progress?: number;
 }) {
+  const stepFraction = current / total;
+  const within = typeof progress === "number" ? Math.max(0, Math.min(1, progress)) : 1;
+  const fillPct = (((current - 1) + within) / total) * 100;
+  const widthPct = Math.max(fillPct, stepFraction * 100 - (1 / total) * 100);
   return (
     <div>
-      <div className="flex items-center gap-3 text-xs text-muted tabular">
+      <div className="flex items-center gap-3 text-xs text-[#999999] tabular">
         <span>
           Step {current} of {total}
         </span>
-        <div className="flex-1 h-[3px] rounded-full bg-surface-2 overflow-hidden">
+        <div className="flex-1 h-[4px] rounded-full bg-[#1a1a1a] overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
-            animate={{ width: `${(current / total) * 100}%` }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="h-full bg-fg"
+            animate={{ width: `${widthPct}%` }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="h-full bg-[#FF6B35] shadow-[0_0_8px_rgba(255,107,53,0.6)]"
           />
         </div>
       </div>
-      <h2 className="mt-5 font-display text-h2 font-bold tracking-tightest">{title}</h2>
-      <p className="mt-3 text-base text-muted leading-relaxed">{subtitle}</p>
+      <h2 className="mt-5 font-display text-h2 font-bold tracking-tightest text-white">{title}</h2>
+      <p className="mt-3 text-base text-[#999999] leading-relaxed">{subtitle}</p>
     </div>
   );
 }
@@ -636,7 +661,7 @@ function Field({
     <label className="block">
       <span className={labelCls}>
         {label}
-        {required && <span className="text-accent ml-1" aria-hidden="true">*</span>}
+        {required && <span className="text-[#FF6B35] ml-1" aria-hidden="true">*</span>}
       </span>
       {children}
     </label>
@@ -648,7 +673,7 @@ function BackLink({ onClick, label }: { onClick: () => void; label: string }) {
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center gap-1.5 -ml-1 px-2 py-1 rounded-md text-sm text-muted hover:text-fg transition-colors duration-250"
+      className="inline-flex items-center gap-1.5 -ml-1 px-2 py-1 rounded-md text-sm text-[#999999] hover:text-[#FF6B35] transition-colors duration-250"
     >
       <ArrowLeft className="size-4" aria-hidden="true" />
       {label}
@@ -672,7 +697,7 @@ function Chip({
       aria-pressed={active}
       className={
         "inline-flex items-center h-10 px-4 rounded-full border text-sm transition-colors duration-250 " +
-        (active ? "bg-fg text-bg border-transparent" : "bg-surface text-fg hairline hover:border-fg/40")
+        (active ? "bg-[#FF6B35] text-white border-transparent" : "bg-[#0a0b0d] text-white border-[#1a1a1a] hover:border-[#FF6B35]/40")
       }
     >
       {children}

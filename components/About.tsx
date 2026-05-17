@@ -1,9 +1,9 @@
 import Section from "./Section";
 
 const stats = [
-  { k: "120%", v: "Year-over-year growth in shipped AI features for retained partners." },
-  { k: "60+", v: "Production projects delivered across web, mobile, and machine learning." },
-  { k: "1 pod", v: "One team per engagement. No handoffs, no account managers." },
+  { k: "15+", v: "AI-native products shipped from concept to production." },
+  { k: "8", v: "Active partnerships with founders building the next wave." },
+  { k: "100%", v: "Hands-on execution — we build, not just advise." },
 ];
 
 export default function About() {
@@ -14,14 +14,24 @@ export default function About() {
       title="Hands-on operators. AI-native by default."
       description="We're designers, engineers, and ML practitioners who've shipped to millions. Every Verikon engagement is led by the people building your product — strategy, design, and code, in one room."
     >
-      <dl className="grid md:grid-cols-3 gap-10 md:gap-12">
+      <div className="relative">
+        <div
+          className="absolute -top-24 -right-32 size-[35rem] rounded-full bg-[#FF6B35]/15 blur-[100px] pointer-events-none"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute top-1/2 -left-20 size-[30rem] rounded-full bg-[#2563EB]/12 blur-[100px] pointer-events-none"
+          aria-hidden="true"
+        />
+        <dl className="grid md:grid-cols-3 gap-10 md:gap-12 relative">
         {stats.map((s) => (
-          <div key={s.k} className="border-t hairline-strong pt-6">
-            <dt className="font-display text-h3 font-bold tracking-tightest tabular">{s.k}</dt>
-            <dd className="mt-3 text-muted leading-relaxed">{s.v}</dd>
+          <div key={s.k} className="border-t border-[#1a1a1a] pt-6">
+            <dt className="font-display text-4xl md:text-5xl font-bold tracking-tightest tabular text-white">{s.k}</dt>
+            <dd className="mt-3 text-[#999999] leading-relaxed">{s.v}</dd>
           </div>
         ))}
-      </dl>
+        </dl>
+      </div>
     </Section>
   );
 }

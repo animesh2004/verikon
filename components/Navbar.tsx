@@ -45,7 +45,7 @@ export default function Navbar() {
         className={clsx(
           "fixed top-0 inset-x-0 z-50 transition-[background,backdrop-filter,border-color] duration-250 ease-out-soft",
           scrolled || mobileOpen
-            ? "backdrop-blur-md bg-[color-mix(in_oklab,var(--bg)_75%,transparent)] border-b hairline"
+            ? "backdrop-blur-md bg-[rgba(9,10,12,0.8)] border-b border-[#1a1a1a]"
             : "bg-transparent border-b border-transparent"
         )}
       >
@@ -55,16 +55,16 @@ export default function Navbar() {
         >
           <a
             href="#"
-            className="font-display font-bold tracking-tightest text-lg hover:opacity-80 transition-opacity duration-250"
+            className="font-display font-bold tracking-tightest text-lg hover:opacity-80 transition-opacity duration-250 text-white"
           >
-            Verikon<span className="text-accent">.</span>
+            Verikon<span className="text-[#FF6B35]">.</span>
           </a>
-          <ul className="hidden md:flex items-center gap-8 text-sm text-muted">
+          <ul className="hidden md:flex items-center gap-8 text-sm text-[#999999]">
             {links.map((l) => (
               <li key={l.href}>
                 <a
                   href={l.href}
-                  className="hover:text-fg transition-colors duration-250"
+                  className="hover:text-white transition-colors duration-250"
                 >
                   {l.label}
                 </a>
@@ -73,13 +73,13 @@ export default function Navbar() {
           </ul>
           <Link
             href="/intake"
-            className="hidden md:inline-flex items-center h-9 px-4 rounded-full bg-fg text-bg text-sm font-medium hover:opacity-85 transition-opacity duration-250 cursor-pointer"
+            className="hidden md:inline-flex items-center h-9 px-6 rounded-full bg-[#FF6B35] text-white text-sm font-medium hover:shadow-[0_0_20px_rgba(255,107,53,0.6)] transition-all duration-250 cursor-pointer"
           >
             Start a project
           </Link>
           <button
             type="button"
-            className="md:hidden inline-flex items-center justify-center size-11 -mr-2 rounded-full text-fg hover:bg-fg/5 transition-colors duration-250"
+            className="md:hidden inline-flex items-center justify-center size-11 -mr-2 rounded-full text-white hover:bg-white/10 transition-colors duration-250"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav"
@@ -101,7 +101,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: reduce ? 0 : 0.2 }}
-              className="md:hidden fixed inset-0 top-16 z-40 bg-fg/30 backdrop-blur-[2px]"
+              className="md:hidden fixed inset-0 top-16 z-40 bg-black/50 backdrop-blur-[2px]"
             />
             <motion.div
               id="mobile-nav"
@@ -112,7 +112,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
               transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="md:hidden fixed top-[4.5rem] inset-x-4 z-50 rounded-3xl border hairline bg-surface shadow-[0_24px_60px_-24px_rgba(0,0,0,0.25)] overflow-hidden"
+              className="md:hidden fixed top-[4.5rem] inset-x-4 z-50 rounded-3xl border border-[#1a1a1a] bg-[#0f1012] shadow-[0_24px_60px_-24px_rgba(255,107,53,0.2)] overflow-hidden"
             >
               <ul className="p-3 flex flex-col">
                 {links.map((l) => (
@@ -120,7 +120,7 @@ export default function Navbar() {
                     <a
                       href={l.href}
                       onClick={() => setMobileOpen(false)}
-                      className="flex items-center py-3 px-4 rounded-2xl text-base text-fg hover:bg-fg/5 transition-colors duration-250"
+                      className="flex items-center py-3 px-4 rounded-2xl text-base text-white hover:bg-white/5 transition-colors duration-250"
                     >
                       {l.label}
                     </a>
@@ -131,7 +131,7 @@ export default function Navbar() {
                 <Link
                   href="/intake"
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center justify-center h-12 rounded-full bg-fg text-bg text-sm font-medium hover:opacity-90 transition-opacity duration-250"
+                  className="flex items-center justify-center h-12 rounded-full bg-[#FF6B35] text-white text-sm font-medium hover:shadow-[0_0_20px_rgba(255,107,53,0.6)] transition-all duration-250"
                 >
                   Start a project
                 </Link>

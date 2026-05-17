@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={jakarta.variable}>
-      <body className="font-sans antialiased bg-bg text-fg">
+      <body className="font-sans antialiased bg-[#090A0C] text-white">
         <a href="#main" className="skip-link">Skip to content</a>
         {children}
       </body>

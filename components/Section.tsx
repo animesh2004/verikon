@@ -15,8 +15,14 @@ type Props = {
 export default function Section({ id, eyebrow, title, description, children, className }: Props) {
   const reduce = useReducedMotion();
   return (
-    <section id={id} className={clsx("py-28 md:py-32 border-t hairline", className)}>
-      <div className="container-px mx-auto max-w-7xl">
+    <section id={id} className={clsx("py-28 md:py-32 border-t border-[#1a1a1a] relative overflow-hidden", className)}>
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute top-0 right-1/4 size-[30rem] rounded-full bg-[#2563EB]/12 blur-[100px]"
+          aria-hidden="true"
+        />
+      </div>
+      <div className="container-px mx-auto max-w-7xl relative">
         <motion.header
           initial={reduce ? { opacity: 0 } : { opacity: 0, y: 16 }}
           whileInView={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
@@ -25,15 +31,15 @@ export default function Section({ id, eyebrow, title, description, children, cla
           className="max-w-3xl"
         >
           {eyebrow && (
-            <div className="text-xs uppercase tracking-[0.2em] text-accent mb-5 font-medium">
+            <div className="text-xs uppercase tracking-[0.2em] text-[#FF6B35] mb-5 font-medium drop-shadow-[0_0_8px_rgba(255,107,53,0.3)]">
               {eyebrow}
             </div>
           )}
-          <h2 className="font-display font-bold tracking-tightest text-h2 text-balance">
+          <h2 className="font-display font-bold tracking-tightest text-5xl md:text-6xl text-balance text-white">
             {title}
           </h2>
           {description && (
-            <p className="mt-5 text-lg text-muted leading-relaxed max-w-2xl">{description}</p>
+            <p className="mt-5 text-lg text-[#999999] leading-relaxed max-w-2xl">{description}</p>
           )}
         </motion.header>
         {children && <div className="mt-16 md:mt-20">{children}</div>}

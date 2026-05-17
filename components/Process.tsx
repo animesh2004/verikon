@@ -19,7 +19,16 @@ export default function Process() {
       title="A simple, focused workflow."
       description="Four steps. No surprises. You always know what's happening and what's next."
     >
-      <ol role="list" className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="relative">
+        <div
+          className="absolute -top-32 right-1/4 size-[32rem] rounded-full bg-[#FF6B35]/16 blur-[100px] pointer-events-none"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute -bottom-20 left-0 size-[28rem] rounded-full bg-[#2563EB]/14 blur-[100px] pointer-events-none"
+          aria-hidden="true"
+        />
+        <ol role="list" className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 relative">
         {steps.map((s, i) => (
           <motion.li
             key={s.n}
@@ -27,14 +36,15 @@ export default function Process() {
             whileInView={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.55, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-            className="border-t hairline-strong pt-6"
+            className="border-t border-[#1a1a1a] pt-6"
           >
-            <div className="text-accent font-display text-sm font-medium tabular">{s.n}</div>
-            <h3 className="mt-3 font-display text-xl font-semibold tracking-tight">{s.t}</h3>
-            <p className="mt-3 text-muted leading-relaxed">{s.d}</p>
+            <div className="text-[#FF6B35] font-display text-sm font-medium tabular">{s.n}</div>
+            <h3 className="mt-3 font-display text-xl font-semibold tracking-tight text-white">{s.t}</h3>
+            <p className="mt-3 text-[#999999] leading-relaxed">{s.d}</p>
           </motion.li>
         ))}
-      </ol>
+        </ol>
+      </div>
     </Section>
   );
 }
