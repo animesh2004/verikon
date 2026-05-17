@@ -51,7 +51,7 @@ export default function Navbar() {
       >
         <nav
           aria-label="Primary"
-          className="container-px mx-auto max-w-7xl flex items-center justify-between h-16"
+          className="container-px mx-auto max-w-7xl 2xl:max-w-screen-2xl flex items-center justify-between h-16 2xl:h-20"
         >
           <a
             href="#"

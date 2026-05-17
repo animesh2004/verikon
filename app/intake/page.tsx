@@ -29,14 +29,14 @@ export default function IntakePage() {
           aria-hidden="true"
         />
 
-        <section className="container-px mx-auto max-w-4xl pt-16 md:pt-24 pb-10 relative">
+        <section className="container-px mx-auto max-w-4xl 2xl:max-w-5xl pt-12 sm:pt-16 md:pt-24 pb-8 sm:pb-10 relative">
           <div className="text-xs font-medium tracking-widest text-[#FF6B35] uppercase tabular">
             Project intake
           </div>
-          <h1 className="mt-4 font-display text-6xl md:text-7xl lg:text-8xl font-bold tracking-tightest leading-[0.95] text-balance text-white">
+          <h1 className="mt-3 sm:mt-4 font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tightest leading-[0.95] text-balance text-white">
             Let's build <span className="text-[#FF6B35]">something</span> that matters.
           </h1>
-          <p className="mt-6 text-lg md:text-xl text-[#999999] max-w-2xl leading-relaxed">
+          <p className="mt-5 sm:mt-6 text-base sm:text-lg md:text-xl text-[#999999] max-w-2xl leading-relaxed">
             Share your vision and constraints. We'll come prepared to the first call with a deep understanding of your problem and a concrete path to an AI-native solution.
           </p>
           <p className="mt-4 text-sm text-[#999999]">
@@ -50,8 +50,8 @@ export default function IntakePage() {
           </p>
         </section>
 
-        <section className="container-px mx-auto max-w-4xl pb-24 md:pb-32 relative">
-          <div className="rounded-3xl border border-[#FF6B35] bg-gradient-to-br from-[#0f1012] to-[#0a0b0d] p-6 sm:p-10 md:p-14 shadow-[0_10px_40px_rgba(255,107,53,0.15)]">
+        <section className="container-px mx-auto max-w-4xl 2xl:max-w-5xl pb-16 sm:pb-24 md:pb-32 relative">
+          <div className="rounded-3xl border border-[#FF6B35] bg-gradient-to-br from-[#0f1012] to-[#0a0b0d] p-5 sm:p-8 md:p-10 lg:p-14 shadow-[0_10px_40px_rgba(255,107,53,0.15)]">
             <IntakeForm />
           </div>
         </section>

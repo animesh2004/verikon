@@ -31,7 +31,7 @@ export default function WhyChooseUs() {
           className="absolute -bottom-24 -right-20 size-[30rem] rounded-full bg-[#FF6B35]/14 blur-[100px] pointer-events-none"
           aria-hidden="true"
         />
-        <ul role="list" className="grid md:grid-cols-3 gap-6 relative">
+        <ul role="list" className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 relative">
         {pillars.map((p) => (
           <li
             key={p.title}

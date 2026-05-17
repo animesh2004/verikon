@@ -15,34 +15,34 @@ type Props = {
 export default function Section({ id, eyebrow, title, description, children, className }: Props) {
   const reduce = useReducedMotion();
   return (
-    <section id={id} className={clsx("py-28 md:py-32 border-t border-[#1a1a1a] relative overflow-hidden", className)}>
+    <section id={id} className={clsx("py-20 sm:py-24 md:py-28 lg:py-32 2xl:py-40 border-t border-[#1a1a1a] relative overflow-hidden", className)}>
       <div className="absolute inset-0 pointer-events-none">
         <div
-          className="absolute top-0 right-1/4 size-[30rem] rounded-full bg-[#2563EB]/12 blur-[100px]"
+          className="absolute top-0 right-1/4 size-[20rem] md:size-[28rem] lg:size-[30rem] rounded-full bg-[#2563EB]/12 blur-[100px]"
           aria-hidden="true"
         />
       </div>
-      <div className="container-px mx-auto max-w-7xl relative">
+      <div className="container-px mx-auto max-w-7xl 2xl:max-w-screen-2xl relative">
         <motion.header
           initial={reduce ? { opacity: 0 } : { opacity: 0, y: 16 }}
           whileInView={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl"
+          className="max-w-3xl 2xl:max-w-4xl"
         >
           {eyebrow && (
-            <div className="text-xs uppercase tracking-[0.2em] text-[#FF6B35] mb-5 font-medium drop-shadow-[0_0_8px_rgba(255,107,53,0.3)]">
+            <div className="text-xs uppercase tracking-[0.2em] text-[#FF6B35] mb-4 sm:mb-5 font-medium drop-shadow-[0_0_8px_rgba(255,107,53,0.3)]">
               {eyebrow}
             </div>
           )}
-          <h2 className="font-display font-bold tracking-tightest text-5xl md:text-6xl text-balance text-white">
+          <h2 className="font-display font-bold tracking-tightest text-4xl sm:text-5xl md:text-6xl xl:text-7xl 2xl:text-8xl text-balance text-white">
             {title}
           </h2>
           {description && (
-            <p className="mt-5 text-lg text-[#999999] leading-relaxed max-w-2xl">{description}</p>
+            <p className="mt-4 sm:mt-5 text-base sm:text-lg 2xl:text-xl text-[#999999] leading-relaxed max-w-2xl 2xl:max-w-3xl">{description}</p>
           )}
         </motion.header>
-        {children && <div className="mt-16 md:mt-20">{children}</div>}
+        {children && <div className="mt-12 sm:mt-14 md:mt-16 lg:mt-20">{children}</div>}
       </div>
     </section>
   );

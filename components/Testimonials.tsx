@@ -38,7 +38,7 @@ export default function Testimonials() {
           className="absolute -bottom-24 -right-20 size-[28rem] rounded-full bg-[#FF6B35]/15 blur-[100px] pointer-events-none"
           aria-hidden="true"
         />
-        <ul role="list" className="grid md:grid-cols-3 gap-6 relative">
+        <ul role="list" className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 relative">
         {quotes.map((t, i) => (
           <motion.li
             key={t.a}

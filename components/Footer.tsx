@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="border-t border-[#1a1a1a] py-12 bg-[#090A0C]">
-      <div className="container-px mx-auto max-w-7xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="container-px mx-auto max-w-7xl 2xl:max-w-screen-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
           <div className="font-display font-bold tracking-tightest text-lg text-white">
             Verikon<span className="text-[#FF6B35]">.</span>

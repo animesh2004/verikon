@@ -28,7 +28,7 @@ export default function Process() {
           className="absolute -bottom-20 left-0 size-[28rem] rounded-full bg-[#2563EB]/14 blur-[100px] pointer-events-none"
           aria-hidden="true"
         />
-        <ol role="list" className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 relative">
+        <ol role="list" className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 relative">
         {steps.map((s, i) => (
           <motion.li
             key={s.n}
